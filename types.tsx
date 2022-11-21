@@ -21,6 +21,7 @@ export type RootStackParamList = {
   Modal: undefined;
   NotFound: undefined;
   ChatRoom: undefined;
+  Home: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
@@ -28,7 +29,7 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
 
 export type RootTabParamList = {
   Home: undefined;
-  ChatRoom: udefined;
+  ChatRoom: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> =

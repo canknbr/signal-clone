@@ -1,10 +1,5 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
-import { FontAwesome } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Feather } from '@expo/vector-icons';
+
 import {
   NavigationContainer,
   DefaultTheme,
@@ -12,20 +7,20 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
-
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
+import {
+  ColorSchemeName,
+  Image,
+  Pressable,
+  Text,
+  View,
+  useWindowDimensions,
+} from 'react-native';
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import HomeScreen from '../screens/HomeScreen';
 import ChatRoomScreen from '../screens/ChatRoomScreen';
-
-import {
-  RootStackParamList,
-  RootTabParamList,
-  RootTabScreenProps,
-} from '../types';
+import BottomTabNavigator from './BottomTabNavigator';
+import { RootStackParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
 export default function Navigation({
@@ -49,15 +44,16 @@ function RootNavigator() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="ChatRoom"
-        component={ChatRoomScreen}
-        options={{ headerShown: true }}
+        name="Home"
+        component={HomeScreen}
+        options={{ headerTitle: HomeHeader }}
       />
       <Stack.Screen
-        name="Root"
-        component={BottomTabNavigator}
-        options={{ headerShown: false }}
+        name="ChatRoom"
+        component={ChatRoomScreen}
+        options={{ headerTitle: ChatRoomHeader }}
       />
+
       <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
@@ -67,44 +63,72 @@ function RootNavigator() {
   );
 }
 
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
-
-function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
-
+const HomeHeader = () => {
+  const { width } = useWindowDimensions();
   return (
-    <BottomTab.Navigator
-      initialRouteName="Home"
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
+    <View
+      style={{
+        flexDirection: 'row',
+        width,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
       }}
     >
-      <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+      <Image
+        source={{
+          uri: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80',
         }}
+        style={{ width: 30, height: 30, borderRadius: 30 }}
       />
-      <BottomTab.Screen
-        name="ChatRoom"
-        component={ChatRoomScreen}
-        options={{
-          title: 'Chat Room',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-    </BottomTab.Navigator>
+      <Text style={{ fontWeight: 'bold', fontSize: 18, marginLeft: 10 }}>
+        Signal
+      </Text>
+      <View style={{ flexDirection: 'row', marginRight: 20 }}>
+        <Feather
+          name="camera"
+          size={24}
+          color="black"
+          style={{ marginRight: 10 }}
+        />
+        <Feather name="edit-2" size={24} color="black" />
+      </View>
+    </View>
   );
-}
+};
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
-}
+const ChatRoomHeader = props => {
+  const { width } = useWindowDimensions();
+  return (
+    <View
+      style={{
+        flexDirection: 'row',
+        width,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 10,
+      }}
+    >
+      <Image
+        source={{
+          uri: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2340&q=80',
+        }}
+        style={{ width: 30, height: 30, borderRadius: 30 }}
+      />
+      <Text
+        style={{ fontWeight: 'bold', fontSize: 18, marginLeft: 10, flex: 1 }}
+      >
+        {props.children}
+      </Text>
+      <View style={{ flexDirection: 'row', marginRight: 60 }}>
+        <Feather
+          name="camera"
+          size={24}
+          color="black"
+          style={{ marginRight: 10 }}
+        />
+        <Feather name="edit-2" size={24} color="black" />
+      </View>
+    </View>
+  );
+};

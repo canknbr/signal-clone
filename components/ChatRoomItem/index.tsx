@@ -1,12 +1,20 @@
-import { View, Text, StyleSheet, Image } from 'react-native';
+import { View, Text, Pressable, Image } from 'react-native';
 import React from 'react';
 import styles from './styles';
 import dayjs from 'dayjs';
+import { useNavigation } from '@react-navigation/native';
 const relativeTime = require('dayjs/plugin/relativeTime');
 dayjs.extend(relativeTime);
 const ChatRoomItem = ({ chatRoom }) => {
+  const navigation = useNavigation();
+  const onPress = () => {
+    navigation.navigate('ChatRoom', {
+      id: chatRoom.id,
+      name: chatRoom.users[1].name,
+    });
+  };
   return (
-    <View style={styles.container}>
+    <Pressable onPress={onPress} style={styles.container}>
       <Image
         style={styles.image}
         source={{ uri: chatRoom.users[1].imageUri }}
@@ -30,7 +38,7 @@ const ChatRoomItem = ({ chatRoom }) => {
           {chatRoom.lastMessage.content}
         </Text>
       </View>
-    </View>
+    </Pressable>
   );
 };
 

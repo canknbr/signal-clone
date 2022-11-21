@@ -1,10 +1,17 @@
 import { View, Text } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import styles from './styles';
+import { useRoute, useNavigation } from '@react-navigation/native';
 const myId = 'u1';
 const grey = 'lightgrey';
 const blue = '#3777f0';
+
 const Message = ({ message }) => {
+  const route = useRoute();
+  const navigation = useNavigation();
+  useEffect(() => {
+    navigation.setOptions({ title: route.params.name });
+  }, [route.params.name]);
   const isMyMessage = message.user.id === myId;
   return (
     <View
