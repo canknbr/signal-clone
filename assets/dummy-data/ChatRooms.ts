@@ -20,6 +20,7 @@ export default [
       content: 'btw, SpaceX is interested in buying notJust.dev!',
       createdAt: '2020-10-03T14:48:00.000Z',
     },
+    newMessage: 2,
   },
   {
     id: '2',
@@ -42,6 +43,7 @@ export default [
       content: 'Why did you reject our offer?',
       createdAt: '2020-10-02T15:40:00.000Z',
     },
+    newMessage: 1,
   },
   {
     id: '3',
@@ -64,6 +66,7 @@ export default [
       content: 'Is signal really better than my Whatsapp?',
       createdAt: '2020-10-02T14:48:00.000Z',
     },
+    newMessage: 5,
   },
   {
     id: '4',
